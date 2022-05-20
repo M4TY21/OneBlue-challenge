@@ -2,6 +2,7 @@ import { FormEvent, useState } from 'react'
 
 import {
   Container,
+  FormAlert,
   Card,
   Title,
   Subtitle,
@@ -13,18 +14,42 @@ import {
 
 import { Button, TextField } from '@mui/material'
 
+import * as yup from 'yup'
+
+interface User {
+  name: string
+  password: string
+}
+
 export function Home() {
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
+  const [user, setUser] = useState<User>({} as User)
+  const [alert, setAlert] = useState(false)
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault()
 
-    console.log(name, password)
+    setUser({
+      name: name,
+      password: password
+    })
+
+    console.log(user)
+
+    setAlert(true)
+    setName('')
+    setPassword('')
   }
 
   return (
     <Container>
+      {alert && (
+        <FormAlert onClose={() => setAlert(false)}>
+          This is a success alert — check it out!
+        </FormAlert>
+      )}
+
       <Card>
         <Title>Cadastro</Title>
 

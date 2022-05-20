@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 import { Link } from 'react-router-dom'
+import { Alert } from '@mui/material'
 
 export const Container = styled.main`
   display: flex;
@@ -8,15 +9,20 @@ export const Container = styled.main`
   height: 100vh;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+`
+export const FormAlert = styled(Alert)`
+  margin-bottom: 3rem;
 `
 
 export const Card = styled.div`
   width: 28rem;
-  max-height: 450px;
+  max-height: 28rem;
   background-color: #fafafa;
   border: 1px solid #fafafa;
   border-radius: 0.5rem;
   align-items: center;
+  align-self: center;
   display: flex;
   flex-direction: column;
 `
