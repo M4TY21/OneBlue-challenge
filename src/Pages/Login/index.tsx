@@ -13,7 +13,7 @@ import {
 
 import { Button, TextField } from '@mui/material'
 
-export function Home() {
+export function Login() {
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
 
@@ -26,7 +26,7 @@ export function Home() {
   return (
     <Container>
       <Card>
-        <Title>Cadastro</Title>
+        <Title>Login</Title>
 
         <Subtitle>Preencha os seguintes campos</Subtitle>
 
@@ -51,13 +51,13 @@ export function Home() {
           />
 
           <Button variant="contained" color="primary" type="submit">
-            Realizar cadastro
+            Realizar login
           </Button>
         </FormDiv>
 
         <Footer>
-          <Content>Ou se já estiver cadastrado, </Content>
-          <Teste to="/login">Faça login</Teste>
+          <Content>Ou se ainda não houver conta, </Content>
+          <Teste to="/">Faça o cadastro</Teste>
         </Footer>
       </Card>
     </Container>
