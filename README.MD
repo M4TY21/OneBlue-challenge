@@ -1,6 +1,6 @@
 # Desafio ReactJS OneBlue
 
-Criar uma interface que interaja com o
+O projeto consiste em criar uma interface de cadastro/login que interaja com o uma api local.
 
 ## Clone o repositório e instale as dependências
 

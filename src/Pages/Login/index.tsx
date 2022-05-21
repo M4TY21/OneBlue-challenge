@@ -30,13 +30,20 @@ export function Login() {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
-    const response = await api.post("/login", {
-      name: name,
-      password: password,
-    });
+    try {
+      const response = await api.post("/login", {
+        name: name,
+        password: password,
+      });
 
-    setUser(response.data);
-    console.log(response.data);
+      setUser(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+      setUser({
+        ok: false,
+      });
+    }
 
     setAlert(true);
     setName("");
@@ -52,7 +59,7 @@ export function Login() {
         >
           {user.ok
             ? `Olá ${user.login}, seu login foi realizado com sucesso`
-            : "Houve um erro ao fazer o login"}
+            : "Houve um erro ao fazer o login, verifique se as credencias estão certas"}
         </FormAlert>
       )}
 

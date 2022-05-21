@@ -35,13 +35,17 @@ export function Home() {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
-    const response = await api.post("/user/cadaster", {
-      name: name,
-      password: password,
-    });
+    try {
+      const response = await api.post("/user/cadaster", {
+        name: name,
+        password: password,
+      });
 
-    setUser(response.data);
-    console.log(response.data);
+      setUser(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
 
     setAlert(true);
     setName("");
@@ -57,7 +61,7 @@ export function Home() {
         >
           {user.ok
             ? `Olá ${user.user?.name}, seu cadastro foi realizado com sucesso`
-            : "Houve um erro ao fazer o login"}
+            : "Esse usuário já existe"}
         </FormAlert>
       )}
 
