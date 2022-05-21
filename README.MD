@@ -48,8 +48,8 @@ Após clonar o repositório e instalar as dependências necessárias, para rodar
 
 ## Tecnologias e bibliotecas utilizadas
 
-- Axios
+- Axios / Foi utilizado para fazer o POST da API na aplicação
 - Yup
-- React-router-dom / Para fazer a navegação da pagina de cadastro para a de login
+- React-router-dom / Foi utilizado para fazer a navegação da pagina de cadastro para a de login
 - Styled components
 - MUI

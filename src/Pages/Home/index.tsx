@@ -1,4 +1,6 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useState } from "react";
+
+import { api } from "../../services/api";
 
 import {
   Container,
@@ -9,44 +11,53 @@ import {
   FormDiv,
   Footer,
   Content,
-  Teste
-} from './style'
+  NavLink,
+} from "./style";
 
-import { Button, TextField } from '@mui/material'
+import { Button, TextField } from "@mui/material";
 
-import * as yup from 'yup'
+import * as yup from "yup";
 
 interface User {
-  name: string
-  password: string
+  ok: boolean;
+  user?: {
+    name: string;
+  };
+  why?: string;
 }
 
 export function Home() {
-  const [name, setName] = useState('')
-  const [password, setPassword] = useState('')
-  const [user, setUser] = useState<User>({} as User)
-  const [alert, setAlert] = useState(false)
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, setUser] = useState<User>({} as User);
+  const [alert, setAlert] = useState(false);
 
   async function handleSubmit(event: FormEvent) {
-    event.preventDefault()
+    event.preventDefault();
 
-    setUser({
+    const response = await api.post("/user/cadaster", {
       name: name,
-      password: password
-    })
+      password: password,
+    });
 
-    console.log(user)
+    setUser(response.data);
+    console.log(response.data);
 
-    setAlert(true)
-    setName('')
-    setPassword('')
+    setAlert(true);
+    setName("");
+    setPassword("");
   }
 
   return (
     <Container>
       {alert && (
-        <FormAlert onClose={() => setAlert(false)}>
-          This is a success alert — check it out!
+        <FormAlert
+          onClose={() => setAlert(false)}
+          severity={user.ok ? "success" : "error"}
+        >
+          {user.ok
+            ? `Olá ${user.user?.name}, seu cadastro foi realizado com sucesso`
+            : "Houve um erro ao fazer o login"}
         </FormAlert>
       )}
 
@@ -61,7 +72,7 @@ export function Home() {
             label="Nome de Usuario"
             variant="outlined"
             color="primary"
-            onChange={event => setName(event.target.value)}
+            onChange={(event) => setName(event.target.value)}
             value={name}
           />
 
@@ -71,7 +82,7 @@ export function Home() {
             variant="outlined"
             color="primary"
             type="password"
-            onChange={event => setPassword(event.target.value)}
+            onChange={(event) => setPassword(event.target.value)}
             value={password}
           />
 
@@ -82,9 +93,9 @@ export function Home() {
 
         <Footer>
           <Content>Ou se já estiver cadastrado, </Content>
-          <Teste to="/login">Faça login</Teste>
+          <NavLink to="/login">Faça login</NavLink>
         </Footer>
       </Card>
     </Container>
-  )
+  );
 }
