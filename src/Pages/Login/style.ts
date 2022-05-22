@@ -11,13 +11,14 @@ export const Container = styled.main`
   align-items: center;
   flex-direction: column;
 `;
-export const FormAlert = styled(Alert)`
+
+export const RegisterAlert = styled(Alert)`
   margin-bottom: 3rem;
 `;
 
 export const Card = styled.div`
   width: 28rem;
-  max-height: 28rem;
+  min-height: 19rem;
   background-color: #fafafa;
   border: 1px solid #fafafa;
   border-radius: 0.5rem;
@@ -31,14 +32,19 @@ export const Title = styled.h1`
   font-size: 1.7rem;
   font-family: "Poppins", sans-serif;
   font-weight: bold;
-  margin-top: 1.3rem;
-  margin-bottom: 0.8rem;
+  margin-top: 1rem;
 `;
 
 export const Subtitle = styled.p`
   font-size: 1rem;
   font-family: "Poppins", sans-serif;
-  margin-bottom: 0.8rem;
+`;
+
+export const ErrorMensage = styled.p`
+  font-size: 1rem;
+  font-family: "Poppins", sans-serif;
+  margin-top: 0.2rem;
+  color: red;
 `;
 
 export const FormDiv = styled.form`
@@ -49,6 +55,7 @@ export const FormDiv = styled.form`
   font-family: "Poppins", sans-serif;
   gap: 0.5rem;
   margin-bottom: 0.8rem;
+  margin-top: 0.6rem;
 `;
 
 export const Footer = styled.footer`
@@ -57,8 +64,6 @@ export const Footer = styled.footer`
   flex-direction: row;
   margin-bottom: 0.5rem;
 `;
-
-export const Content = styled.p``;
 
 export const NavLink = styled(Link)`
   text-decoration: none;

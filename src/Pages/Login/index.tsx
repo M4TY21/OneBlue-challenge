@@ -1,16 +1,18 @@
 import { FormEvent, useState } from "react";
+
 import { api } from "../../services/api";
+import * as yup from "yup";
 
 import {
   Container,
+  RegisterAlert,
   Card,
   Title,
   Subtitle,
+  ErrorMensage,
   FormDiv,
   Footer,
-  Content,
   NavLink,
-  FormAlert,
 } from "./style";
 
 import { Button, TextField } from "@mui/material";
@@ -26,9 +28,36 @@ export function Login() {
   const [password, setPassword] = useState("");
   const [user, setUser] = useState<LoginUser>({} as LoginUser);
   const [alert, setAlert] = useState(false);
+  const [formAlert, setFormAlert] = useState<string>("");
+
+  async function formValidate() {
+    const schema = yup.object().shape({
+      name: yup.string().required("É obrigatório preencher o campo de nome"),
+      password: yup
+        .string()
+        .required("É obrigatório preencher o campo de senha")
+        .min(6, "A senha deve conter no mínimo 6 caracteres"),
+    });
+
+    try {
+      await schema.validate({ name: name, password: password });
+      return true;
+    } catch (err) {
+      if (err instanceof yup.ValidationError) {
+        setFormAlert(err.errors[0]);
+        return false;
+      }
+    }
+  }
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
+
+    if (!(await formValidate())) {
+      setName("");
+      setPassword("");
+      return;
+    }
 
     try {
       const response = await api.post("/login", {
@@ -37,14 +66,13 @@ export function Login() {
       });
 
       setUser(response.data);
-      console.log(response.data);
     } catch (error) {
-      console.log(error);
       setUser({
         ok: false,
       });
     }
 
+    setFormAlert("");
     setAlert(true);
     setName("");
     setPassword("");
@@ -53,20 +81,22 @@ export function Login() {
   return (
     <Container>
       {alert && (
-        <FormAlert
+        <RegisterAlert
           onClose={() => setAlert(false)}
           severity={user.ok ? "success" : "error"}
         >
           {user.ok
             ? `Olá ${user.login}, seu login foi realizado com sucesso`
             : "Houve um erro ao fazer o login, verifique se as credencias estão certas"}
-        </FormAlert>
+        </RegisterAlert>
       )}
 
       <Card>
         <Title>Login</Title>
 
         <Subtitle>Preencha os seguintes campos</Subtitle>
+
+        {formAlert && <ErrorMensage>{formAlert}</ErrorMensage>}
 
         <FormDiv onSubmit={handleSubmit}>
           <TextField
@@ -94,7 +124,7 @@ export function Login() {
         </FormDiv>
 
         <Footer>
-          <Content>Ou se ainda não houver conta, </Content>
+          <p>Ou se ainda não houver conta, </p>
           <NavLink to="/">Faça o cadastro</NavLink>
         </Footer>
       </Card>
